@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/global_bg_front"
+        android:choiceMode="singleChoice"
+        android:drawSelectorOnTop="true"
+        android:fastScrollEnabled="false"
+        android:listSelector="@drawable/selector_clickable_item_bg" />
+
+    <include
+        android:id="@android:id/empty"
+        layout="@layout/placeholder_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</FrameLayout>

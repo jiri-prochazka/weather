@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- LANGUAGE INDEPENDENT -->
+    <string name="prefs_key_units">units</string>
+    <string name="prefs_key_location">location</string>
+
+    <!-- LANGUAGE DEPENDENT -->
+
+    <string name="prefs_title_units">Units</string>
+    <string name="prefs_title_location">Custom location</string>
+
+    <string name="prefs_default_units">metric</string>
+
+    <string-array name="prefs_entries_units">
+        <item>Metric</item>
+        <item>Imperial</item>
+    </string-array>
+    <string-array name="prefs_values_units">
+        <item>metric</item>
+        <item>imperial</item>
+    </string-array>
+
+</resources>

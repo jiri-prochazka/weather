@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_forecast_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_selectable_item_bg"
+    android:gravity="center_vertical"
+    android:minHeight="@dimen/global_spacing_l"
+    android:padding="@dimen/global_spacing_xs"
+    >
+
+    <ImageView
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:id="@+id/fragment_forecast_item_icon"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:scaleType="fitCenter"
+        android:layout_marginRight="@dimen/global_spacing_xxs"
+        android:background="@drawable/circle_shape" />
+
+    <TextView
+        android:id="@+id/fragment_forecast_item_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/fragment_forecast_item_icon"
+        android:layout_marginLeft="@dimen/global_keyline_s"
+        android:layout_marginRight="@dimen/global_keyline_s"
+        android:textAppearance="@style/TextAppearance.Example.Title"
+        tools:text="Hello world" />
+
+    <TextView
+        android:id="@+id/fragment_forecast_item_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fragment_forecast_item_text"
+        android:layout_toRightOf="@+id/fragment_forecast_item_icon"
+        android:layout_marginTop="@dimen/global_spacing_xxs"
+        android:layout_marginLeft="@dimen/global_keyline_s"
+        android:layout_marginRight="@dimen/global_keyline_s"
+        tools:text="25" />
+
+</RelativeLayout>

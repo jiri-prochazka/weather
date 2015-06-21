@@ -2,9 +2,6 @@ package com.jiriprochazka.weather.android.entity;
 
 import java.util.List;
 
-/**
- * Created by jirka on 15.06.15.
- */
 public class ForecastEntity {
 
     private List<ForecastItem> list;

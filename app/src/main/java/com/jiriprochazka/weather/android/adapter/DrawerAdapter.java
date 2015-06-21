@@ -22,8 +22,7 @@ public class DrawerAdapter extends BaseAdapter {
     private Integer[] mIconList;
 
 
-    public DrawerAdapter(Context context, String[] titleList, Integer[] iconList)
-    {
+    public DrawerAdapter(Context context, String[] titleList, Integer[] iconList) {
         mContext = context;
         mTitleList = titleList;
         mIconList = iconList;
@@ -31,12 +30,10 @@ public class DrawerAdapter extends BaseAdapter {
 
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent)
-    {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         // inflate view
         View view = convertView;
-        if(view == null)
-        {
+        if(view == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.drawer_item, parent, false);
 
@@ -51,8 +48,7 @@ public class DrawerAdapter extends BaseAdapter {
         String title = (String) mTitleList[position];
         Integer icon = (Integer) mIconList[position];
 
-        if(title!=null && icon!=null )
-        {
+        if(title!=null && icon!=null ) {
             // view holder
             ViewHolder holder = (ViewHolder) view.getTag();
 
@@ -60,36 +56,31 @@ public class DrawerAdapter extends BaseAdapter {
             holder.titleTextView.setText(title);
             holder.iconImageView.setImageResource(icon);
         }
-
         return view;
     }
 
 
     @Override
-    public int getCount()
-    {
+    public int getCount() {
         if(mTitleList!=null) return mTitleList.length;
         else return 0;
     }
 
 
     @Override
-    public Object getItem(int position)
-    {
+    public Object getItem(int position) {
         if(mTitleList!=null) return mTitleList[position];
         else return null;
     }
 
 
     @Override
-    public long getItemId(int position)
-    {
+    public long getItemId(int position) {
         return position;
     }
 
 
-    public void refill(Context context, String[] titleList, Integer[] iconList)
-    {
+    public void refill(Context context, String[] titleList, Integer[] iconList) {
         mContext = context;
         mTitleList = titleList;
         mIconList = iconList;
@@ -97,8 +88,7 @@ public class DrawerAdapter extends BaseAdapter {
     }
 
 
-    static class ViewHolder
-    {
+    static class ViewHolder {
         TextView titleTextView;
         ImageView iconImageView;
     }

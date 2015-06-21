@@ -1,13 +1,12 @@
 package com.jiriprochazka.weather.android.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -23,9 +22,7 @@ import com.jiriprochazka.weather.android.R;
 import com.jiriprochazka.weather.android.adapter.DrawerAdapter;
 import com.jiriprochazka.weather.android.dialog.AboutDialogFragment;
 import com.jiriprochazka.weather.android.fragment.ForecastFragment;
-import com.jiriprochazka.weather.android.fragment.SettingsFragment;
 import com.jiriprochazka.weather.android.fragment.TodayFragment;
-
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -34,7 +31,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
 import java.io.File;
-import java.io.IOException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -46,13 +42,6 @@ public class MainActivity extends AppCompatActivity {
     private CharSequence mTitle;
     private CharSequence mDrawerTitle;
     private String[] mTitles;
-
-    public static Intent newIntent(Context context)
-    {
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        return intent;
-    }
 
 
     @Override
@@ -104,11 +93,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu)
     {
-        // action bar menu visibility
-        if(menu!=null)
-        {
-            boolean drawerOpened = mDrawerLayout.isDrawerOpen(mDrawerListView);
-        }
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -124,8 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         // open or close the drawer if home button is pressed
         if(mDrawerToggle.onOptionsItemSelected(item))
         {
@@ -153,24 +136,21 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onPostCreate(Bundle savedInstanceState)
-    {
+    protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         mDrawerToggle.syncState();
     }
 
 
     @Override
-    public void onConfigurationChanged(Configuration newConfiguration)
-    {
+    public void onConfigurationChanged(Configuration newConfiguration) {
         super.onConfigurationChanged(newConfiguration);
         mDrawerToggle.onConfigurationChanged(newConfiguration);
     }
 
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         if(mDrawerLayout.isDrawerOpen(Gravity.LEFT))
         {
             mDrawerLayout.closeDrawer(Gravity.LEFT);
@@ -183,15 +163,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    public void setTitle(CharSequence title)
-    {
+    public void setTitle(CharSequence title) {
         mTitle = title;
         getSupportActionBar().setTitle(mTitle);
     }
 
 
-    private void setupActionBar()
-    {
+    private void setupActionBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -204,8 +182,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void setupDrawer(Bundle savedInstanceState)
-    {
+    private void setupDrawer(Bundle savedInstanceState) {
         mTitle = getTitle();
         mDrawerTitle = getTitle();
 
@@ -234,18 +211,15 @@ public class MainActivity extends AppCompatActivity {
                 selectDrawerItem(position);
             }
         });
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close)
-        {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
             @Override
-            public void onDrawerClosed(View view)
-            {
+            public void onDrawerClosed(View view) {
                 getSupportActionBar().setTitle(mTitle);
                 supportInvalidateOptionsMenu();
             }
 
             @Override
-            public void onDrawerOpened(View drawerView)
-            {
+            public void onDrawerOpened(View drawerView) {
                 getSupportActionBar().setTitle(mDrawerTitle);
                 supportInvalidateOptionsMenu();
             }
@@ -253,15 +227,13 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         // show initial fragment
-        if(savedInstanceState == null)
-        {
+        if(savedInstanceState == null) {
             selectDrawerItem(0);
         }
     }
 
 
-    private void selectDrawerItem(int position)
-    {
+    private void selectDrawerItem(int position) {
         Fragment fragment;
         if(position==0) fragment = new TodayFragment();
         else if(position==1) fragment = new ForecastFragment();
@@ -275,14 +247,14 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout.closeDrawer(mDrawerListView);
     }
 
-    private void showAboutDialog()
-    {
+
+    private void showAboutDialog() {
         // create and show the dialog
         new AboutDialogFragment().show(getFragmentManager(), "About Dialog");
-
     }
 
-    private void setUpImageLoader(){
+
+    private void setUpImageLoader() {
         // init image caching
         File cacheDir = StorageUtils.getCacheDirectory(getApplicationContext());
         cacheDir.mkdirs(); // requires android.permission.WRITE_EXTERNAL_STORAGE
@@ -296,7 +268,6 @@ public class MainActivity extends AppCompatActivity {
                 .diskCacheFileNameGenerator(new HashCodeFileNameGenerator()) // default
                 .defaultDisplayImageOptions(DisplayImageOptions.createSimple())
                 .build();
-
         ImageLoader.getInstance().init(config);
     }
 

@@ -10,16 +10,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.bind.DateTypeAdapter;
 import com.jiriprochazka.weather.android.client.OpenWeatherMapAPI;
-import com.jiriprochazka.weather.android.entity.ForecastEntity;
 import com.jiriprochazka.weather.android.entity.WeatherEntity;
-import com.jiriprochazka.weather.android.geolocation.Geolocation;
 import com.jiriprochazka.weather.android.listener.OnLoadDataListener;
 import com.jiriprochazka.weather.android.utility.Preferences;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
@@ -28,29 +24,26 @@ import retrofit.converter.GsonConverter;
 public class LoadTodayTask extends AsyncTask<Void, Void, String>
 {
 	private WeakReference<OnLoadDataListener> mOnLoadDataListener;
-	private WeatherEntity weather;
-	private Location location;
-	private Context context;
+	private WeatherEntity mWeather;
+	private Location mLocation;
+	private Context mContext;
 	
 	
-	public LoadTodayTask(OnLoadDataListener onLoadDataListener, Location location, Context context)
-	{
+	public LoadTodayTask(OnLoadDataListener onLoadDataListener, Location location, Context context) {
 		setListener(onLoadDataListener);
-		this.location = location;
-		this.context = context;
+		this.mLocation = location;
+		this.mContext = context;
 	}
 	
 	
 	@Override
-	protected String doInBackground(Void... params)
-	{
-		try
-		{
-			Preferences prefs = new Preferences(context);
+	protected String doInBackground(Void... params) {
+		try {
+			Preferences prefs = new Preferences(mContext);
 			String units = prefs.getUserUnits();
 			String customLocation = prefs.getCustomLocation();
-			String longitude = String.valueOf(location.getLongitude());
-			String latitude = String.valueOf(location.getLatitude());
+			String longitude = String.valueOf(mLocation.getLongitude());
+			String latitude = String.valueOf(mLocation.getLatitude());
 
 			Gson gson = new GsonBuilder()
 					.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -64,14 +57,12 @@ public class LoadTodayTask extends AsyncTask<Void, Void, String>
 
 			OpenWeatherMapAPI api = restAdapter.create(OpenWeatherMapAPI.class);
 			if(customLocation == null || customLocation.isEmpty()) {
-				weather = api.getTodaysWeather(longitude, latitude, units);
+				mWeather = api.getTodaysWeather(longitude, latitude, units);
 			} else {
-				weather = api.getTodaysWeatherCity(customLocation, units);
+				mWeather = api.getTodaysWeatherCity(customLocation, units);
 			}
 			Log.d("DEBUG", prefs.getCustomLocation());
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -79,20 +70,17 @@ public class LoadTodayTask extends AsyncTask<Void, Void, String>
 	
 	
 	@Override
-	protected void onPostExecute(String result)
-	{
+	protected void onPostExecute(String result) {
 		if(isCancelled()) return;
 		
 		OnLoadDataListener listener = mOnLoadDataListener.get();
-		if(listener != null)
-		{
-			listener.onWeatherLoadData(weather);
+		if(listener != null) {
+			listener.onWeatherLoadData(mWeather);
 		}
 	}
 	
 	
-	public void setListener(OnLoadDataListener onLoadDataListener)
-	{
+	public void setListener(OnLoadDataListener onLoadDataListener) {
 		mOnLoadDataListener = new WeakReference<>(onLoadDataListener);
 	}
 }

@@ -6,14 +6,7 @@ import android.preference.PreferenceManager;
 
 import com.jiriprochazka.weather.android.R;
 
-/**
- * Created by jirka on 14.06.15.
- */
 public class Preferences {
-    public static final int NULL_INT = -1;
-    public static final long NULL_LONG = -1l;
-    public static final double NULL_DOUBLE = -1.0;
-    public static final String NULL_STRING = null;
 
     private SharedPreferences mSharedPreferences;
     private Context mContext;

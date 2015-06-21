@@ -3,8 +3,6 @@ package com.jiriprochazka.weather.android.task;
 import android.content.Context;
 import android.location.Location;
 import android.os.AsyncTask;
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -12,42 +10,38 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.internal.bind.DateTypeAdapter;
 import com.jiriprochazka.weather.android.client.OpenWeatherMapAPI;
 import com.jiriprochazka.weather.android.entity.ForecastEntity;
-import com.jiriprochazka.weather.android.entity.WeatherEntity;
 import com.jiriprochazka.weather.android.listener.OnLoadDataListener;
 import com.jiriprochazka.weather.android.utility.Preferences;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
 
 public class LoadForecastTask extends AsyncTask<Void, Void, String> {
-    private Location location;
-    private Context context;
+    private Location mLocation;
+    private Context mContext;
     private WeakReference<OnLoadDataListener> mOnLoadDataListener;
-    private ForecastEntity forecastEntity;
+    private ForecastEntity mForecastEntity;
 
 
-
-    public LoadForecastTask(OnLoadDataListener onLoadDataListener, Location location, Context context) {
+    public LoadForecastTask(OnLoadDataListener onLoadDataListener, Location location, Context mContext) {
         setListener(onLoadDataListener);
-        this.location = location;
-        this.context = context;
+        this.mLocation = location;
+        this.mContext = mContext;
     }
 
 
     @Override
     protected String doInBackground(Void... params) {
         try {
-            Preferences prefs = new Preferences(context);
+            Preferences prefs = new Preferences(mContext);
             String units = prefs.getUserUnits();
             String customLocation = prefs.getCustomLocation();
-            String longitude = String.valueOf(location.getLongitude());
-            String latitude = String.valueOf(location.getLatitude());
+            String longitude = String.valueOf(mLocation.getLongitude());
+            String latitude = String.valueOf(mLocation.getLatitude());
 
             Gson gson = new GsonBuilder()
                     .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -62,9 +56,9 @@ public class LoadForecastTask extends AsyncTask<Void, Void, String> {
             OpenWeatherMapAPI api = restAdapter.create(OpenWeatherMapAPI.class);
 
             if(customLocation == null || customLocation.isEmpty()) {
-                forecastEntity = api.getForecast(longitude, latitude, units);
+                mForecastEntity = api.getForecast(longitude, latitude, units);
             } else {
-                forecastEntity = api.getForecastCity(customLocation, units);
+                mForecastEntity = api.getForecastCity(customLocation, units);
             }
 
 
@@ -81,7 +75,7 @@ public class LoadForecastTask extends AsyncTask<Void, Void, String> {
 
         OnLoadDataListener listener = mOnLoadDataListener.get();
         if (listener != null) {
-            listener.onForecastLoadData(forecastEntity);
+            listener.onForecastLoadData(mForecastEntity);
         }
     }
 

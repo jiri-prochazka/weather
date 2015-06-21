@@ -79,63 +79,50 @@ public class TodayFragment extends TaskFragment implements OnLoadDataListener, G
 	
 	
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-	{
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		mRootView = inflater.inflate(R.layout.fragment_today, container, false);
 		return mRootView;
 	}
 	
 	
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState)
-	{
+	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
 		// start geolocation
-		if(mLocation==null)
-		{
+		if(mLocation==null) {
 			mGeolocation = null;
 			mGeolocation = new Geolocation((LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE), this);
 		}
 		
 		// load and show data
-		if(mViewState==null || mViewState==ViewState.OFFLINE)
-		{
+		if(mViewState==null || mViewState==ViewState.OFFLINE) {
 			//loadData();
-		}
-		else if(mViewState==ViewState.CONTENT)
-		{
+		} else if(mViewState==ViewState.CONTENT) {
 			if(mWeather!=null) renderView();
 			showContent();
-		}
-		else if(mViewState==ViewState.PROGRESS)
-		{
+		} else if(mViewState==ViewState.PROGRESS) {
 			showProgress();
-		}
-		else if(mViewState==ViewState.EMPTY)
-		{
+		} else if(mViewState==ViewState.EMPTY) {
 			showEmpty();
 		}
 	}
 	
 	
 	@Override
-	public void onStart()
-	{
+	public void onStart() {
 		super.onStart();
 	}
 	
 	
 	@Override
-	public void onResume()
-	{
+	public void onResume() {
 		super.onResume();
 	}
 	
 	
 	@Override
-	public void onPause()
-	{
+	public void onPause() {
 		super.onPause();
 		// stop geolocation
 		if(mGeolocation!=null) mGeolocation.stop();
@@ -143,40 +130,34 @@ public class TodayFragment extends TaskFragment implements OnLoadDataListener, G
 	
 	
 	@Override
-	public void onStop()
-	{
+	public void onStop() {
 		super.onStop();
 	}
 	
 	
 	@Override
-	public void onDestroyView()
-	{
+	public void onDestroyView() {
 		super.onDestroyView();
 		mRootView = null;
 	}
 	
 	
 	@Override
-	public void onDestroy()
-	{
+	public void onDestroy() {
 		super.onDestroy();
-		
 		// cancel async tasks
 		if(mLoadTodayTask !=null) mLoadTodayTask.cancel(true);
 	}
 	
 	
 	@Override
-	public void onDetach()
-	{
+	public void onDetach() {
 		super.onDetach();
 	}
 	
 	
 	@Override
-	public void onSaveInstanceState(Bundle outState)
-	{
+	public void onSaveInstanceState(Bundle outState) {
 		// save current instance state
 		super.onSaveInstanceState(outState);
 		setUserVisibleHint(true);
@@ -185,20 +166,13 @@ public class TodayFragment extends TaskFragment implements OnLoadDataListener, G
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		// action bar menu
 		super.onCreateOptionsMenu(menu, inflater);
-		
-		// TODO
 	}
 	
 	
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) 
-	{
-		// action bar menu behaviour
+	public boolean onOptionsItemSelected(MenuItem item) {
 		return super.onOptionsItemSelected(item);
-		
-		// TODO
 	}
 	
 	
@@ -223,12 +197,10 @@ public class TodayFragment extends TaskFragment implements OnLoadDataListener, G
 
 	@Override
 	public void onForecastLoadData(ForecastEntity result) {
-
 	}
 
 	@Override
-	public void onGeolocationRespond(Geolocation geolocation, final Location location)
-	{
+	public void onGeolocationRespond(Geolocation geolocation, final Location location) {
 		runTaskCallback(new Runnable()
 		{
 			public void run()
@@ -237,48 +209,35 @@ public class TodayFragment extends TaskFragment implements OnLoadDataListener, G
 
 				mLocation = new Location(location);
 				loadData();
-				// TODO
 			}
 		});
 	}
 
 
 	@Override
-	public void onGeolocationFail(Geolocation geolocation)
-	{
-		runTaskCallback(new Runnable()
-		{
-			public void run()
-			{
+	public void onGeolocationFail(Geolocation geolocation) {
+		runTaskCallback(new Runnable() {
+			public void run() {
 				if(mRootView==null) return; // view was destroyed
-
-				//Logcat.d("Fragment.onGeolocationFail()");
-
-				// TODO
 			}
 		});
 	}
 
 
-	private void loadData()
-	{
-		if(NetworkManager.isOnline(getActivity()))
-		{
+	private void loadData() {
+		if(NetworkManager.isOnline(getActivity())) {
 			// show progress
 			showProgress();
 			// run async task
 			mLoadTodayTask = new LoadTodayTask(this, mLocation, getActivity());
 			executeTask(mLoadTodayTask);
-		}
-		else
-		{
+		} else {
 			showOffline();
 		}
 	}
 	
 	
-	private void showContent()
-	{
+	private void showContent() {
 		// show content container
 		ViewGroup containerContent = (ViewGroup) mRootView.findViewById(R.id.container_content);
 		ViewGroup containerProgress = (ViewGroup) mRootView.findViewById(R.id.container_progress);
@@ -292,8 +251,7 @@ public class TodayFragment extends TaskFragment implements OnLoadDataListener, G
 	}
 	
 	
-	private void showProgress()
-	{
+	private void showProgress() {
 		// show progress container
 		ViewGroup containerContent = (ViewGroup) mRootView.findViewById(R.id.container_content);
 		ViewGroup containerProgress = (ViewGroup) mRootView.findViewById(R.id.container_progress);
@@ -307,8 +265,7 @@ public class TodayFragment extends TaskFragment implements OnLoadDataListener, G
 	}
 	
 	
-	private void showOffline()
-	{
+	private void showOffline() {
 		// show offline container
 		ViewGroup containerContent = (ViewGroup) mRootView.findViewById(R.id.container_content);
 		ViewGroup containerProgress = (ViewGroup) mRootView.findViewById(R.id.container_progress);
@@ -322,8 +279,7 @@ public class TodayFragment extends TaskFragment implements OnLoadDataListener, G
 	}
 	
 	
-	private void showEmpty()
-	{
+	private void showEmpty() {
 		// show empty container
 		ViewGroup containerContent = (ViewGroup) mRootView.findViewById(R.id.container_content);
 		ViewGroup containerProgress = (ViewGroup) mRootView.findViewById(R.id.container_progress);
@@ -337,8 +293,7 @@ public class TodayFragment extends TaskFragment implements OnLoadDataListener, G
 	}
 	
 	
-	private void renderView()
-	{
+	private void renderView() {
 		// reference
 		TextView humidityTextView = (TextView) mRootView.findViewById(R.id.humidity_icon_text);
 		TextView precipitationTextView = (TextView) mRootView.findViewById(R.id.precipitation_icon_text);

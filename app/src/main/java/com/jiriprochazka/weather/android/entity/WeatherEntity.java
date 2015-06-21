@@ -6,9 +6,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-/**
- * Created by jirka on 13.06.15.
- */
 public class WeatherEntity {
 
 
@@ -47,7 +44,7 @@ public class WeatherEntity {
         }
     }
 
-    // Classes of sub-requests
+    // Classes of sub-responses
 
     public class Main {
         private float temp;

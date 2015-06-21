@@ -89,48 +89,36 @@ public class ForecastAdapter extends BaseAdapter {
 
 
     @Override
-    public int getCount()
-    {
+    public int getCount() {
         if(mForecastList !=null) return mForecastList.size();
         else return 0;
     }
 
 
     @Override
-    public Object getItem(int position)
-    {
+    public Object getItem(int position) {
         if(mForecastList !=null) return mForecastList.get(position);
         else return null;
     }
 
 
     @Override
-    public long getItemId(int position)
-    {
+    public long getItemId(int position) {
         return position;
     }
 
 
-    public void refill(Context context, List<ForecastEntity.ForecastItem> forecastList)
-    {
+    public void refill(Context context, List<ForecastEntity.ForecastItem> forecastList) {
         mContext = context;
         mForecastList = forecastList;
         notifyDataSetChanged();
     }
 
 
-    public void stop()
-    {
+    public void stop() {
         // TODO: stop image loader
     }
 
-
-    static class ViewHolder
-    {
-        ImageView iconImageView;
-        TextView mainTextView;
-        TextView tempTextView;
-    }
 
     private String getDayOfForecast(int position) {
         String text = " on ";
@@ -139,5 +127,12 @@ public class ForecastAdapter extends BaseAdapter {
         cal.add(Calendar.DAY_OF_WEEK, position);
         text += sdf.format(cal.getTime());
         return text;
+    }
+
+
+    static class ViewHolder {
+        ImageView iconImageView;
+        TextView mainTextView;
+        TextView tempTextView;
     }
 }

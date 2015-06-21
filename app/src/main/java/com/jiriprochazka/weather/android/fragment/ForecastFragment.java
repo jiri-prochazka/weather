@@ -52,15 +52,13 @@ public class ForecastFragment extends TaskFragment implements OnLoadDataListener
 
 
     @Override
-    public void onAttach(Activity activity)
-    {
+    public void onAttach(Activity activity) {
         super.onAttach(activity);
     }
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // image caching options
         mDisplayImageOptions = new DisplayImageOptions.Builder()
@@ -78,61 +76,50 @@ public class ForecastFragment extends TaskFragment implements OnLoadDataListener
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_forecast, container, false);
         return mRootView;
     }
 
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState)
-    {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         // start geolocation
-        if(mLocation==null)
-        {
+        if(mLocation==null) {
             mGeolocation = null;
             mGeolocation = new Geolocation((LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE), this);
         }
 
         // load and show data
-        if(mViewState==null || mViewState==ViewState.OFFLINE)
-        {
+        if(mViewState==null || mViewState==ViewState.OFFLINE) {
             //loadData(); waiting for geolocation
         }
-        else if(mViewState==ViewState.CONTENT)
-        {
+        else if(mViewState==ViewState.CONTENT) {
             if(mForecastList !=null) renderView();
             showContent();
-        }
-        else if(mViewState==ViewState.PROGRESS)
-        {
+        } else if(mViewState==ViewState.PROGRESS) {
             showProgress();
         }
     }
 
 
     @Override
-    public void onStart()
-    {
+    public void onStart() {
         super.onStart();
     }
 
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
     }
 
 
     @Override
-    public void onPause()
-    {
+    public void onPause() {
         super.onPause();
-
         // stop adapter
         if(mAdapter!=null) mAdapter.stop();
         // stop geolocation
@@ -141,40 +128,34 @@ public class ForecastFragment extends TaskFragment implements OnLoadDataListener
 
 
     @Override
-    public void onStop()
-    {
+    public void onStop() {
         super.onStop();
     }
 
 
     @Override
-    public void onDestroyView()
-    {
+    public void onDestroyView() {
         super.onDestroyView();
         mRootView = null;
     }
 
 
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         super.onDestroy();
-
         // cancel async tasks
         if(mLoadForecastTask !=null) mLoadForecastTask.cancel(true);
     }
 
 
     @Override
-    public void onDetach()
-    {
+    public void onDetach() {
         super.onDetach();
     }
 
 
     @Override
-    public void onSaveInstanceState(Bundle outState)
-    {
+    public void onSaveInstanceState(Bundle outState) {
         // save current instance state
         super.onSaveInstanceState(outState);
         setUserVisibleHint(true);
@@ -182,27 +163,23 @@ public class ForecastFragment extends TaskFragment implements OnLoadDataListener
 
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-    {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
     }
 
 
     @Override
     public void onWeatherLoadData(WeatherEntity result) {
-
     }
 
     @Override
-    public void onForecastLoadData(final ForecastEntity result)
-    {
+    public void onForecastLoadData(final ForecastEntity result) {
         runTaskCallback(new Runnable()
         {
             public void run()
@@ -239,14 +216,11 @@ public class ForecastFragment extends TaskFragment implements OnLoadDataListener
 
     @Override
     public void onGeolocationFail(Geolocation geolocation) {
-
     }
 
 
-    private void loadData()
-    {
-        if(NetworkManager.isOnline(getActivity()))
-        {
+    private void loadData() {
+        if(NetworkManager.isOnline(getActivity())) {
             // show progress
             showProgress();
             // run async task
@@ -260,8 +234,7 @@ public class ForecastFragment extends TaskFragment implements OnLoadDataListener
     }
 
 
-    private void showContent()
-    {
+    private void showContent() {
         // show list container
         ViewGroup containerContent = (ViewGroup) mRootView.findViewById(R.id.container_content);
         ViewGroup containerProgress = (ViewGroup) mRootView.findViewById(R.id.container_progress);
@@ -273,8 +246,7 @@ public class ForecastFragment extends TaskFragment implements OnLoadDataListener
     }
 
 
-    private void showProgress()
-    {
+    private void showProgress() {
         // show progress container
         ViewGroup containerContent = (ViewGroup) mRootView.findViewById(R.id.container_content);
         ViewGroup containerProgress = (ViewGroup) mRootView.findViewById(R.id.container_progress);
@@ -286,8 +258,7 @@ public class ForecastFragment extends TaskFragment implements OnLoadDataListener
     }
 
 
-    private void showOffline()
-    {
+    private void showOffline() {
         // show offline container
         ViewGroup containerContent = (ViewGroup) mRootView.findViewById(R.id.container_content);
         ViewGroup containerProgress = (ViewGroup) mRootView.findViewById(R.id.container_progress);
@@ -299,21 +270,16 @@ public class ForecastFragment extends TaskFragment implements OnLoadDataListener
     }
 
 
-    private void renderView()
-    {
+    private void renderView() {
         // reference
         ListView listView = getListView();
         ViewGroup emptyView = (ViewGroup) mRootView.findViewById(android.R.id.empty);
 
         // listview content
-        if(listView.getAdapter()==null)
-        {
+        if(listView.getAdapter()==null) {
             // create adapter
             mAdapter = new ForecastAdapter(getActivity(), mForecastList, mImageLoader, mDisplayImageOptions, mImageLoadingListener);
-
-        }
-        else
-        {
+        } else {
             // refill adapter
             mAdapter.refill(getActivity(), mForecastList);
         }
@@ -323,12 +289,10 @@ public class ForecastFragment extends TaskFragment implements OnLoadDataListener
 
         // listview empty view
         listView.setEmptyView(emptyView);
-
     }
 
 
-    private ListView getListView()
-    {
+    private ListView getListView() {
         return mRootView!=null ? (ListView) mRootView.findViewById(android.R.id.list) : null;
     }
 

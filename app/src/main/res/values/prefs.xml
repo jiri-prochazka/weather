@@ -2,12 +2,12 @@
 <resources>
     <!-- LANGUAGE INDEPENDENT -->
     <string name="prefs_key_units">units</string>
-    <string name="prefs_key_location">location</string>
+    <string name="prefs_key_location">mLocation</string>
 
     <!-- LANGUAGE DEPENDENT -->
 
     <string name="prefs_title_units">Units</string>
-    <string name="prefs_title_location">Custom location</string>
+    <string name="prefs_title_location">Custom mLocation</string>
 
     <string name="prefs_default_units">metric</string>
 

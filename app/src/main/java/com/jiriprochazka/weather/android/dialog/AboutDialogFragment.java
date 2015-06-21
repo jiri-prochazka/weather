@@ -8,9 +8,6 @@ import android.support.v7.app.AlertDialog;
 
 import com.jiriprochazka.weather.android.R;
 
-/**
- * Created by jirka on 13.06.15.
- */
 public class AboutDialogFragment extends DialogFragment {
 
     @Override

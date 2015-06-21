@@ -1,19 +1,15 @@
 package com.jiriprochazka.weather.android.fragment;
 
-/**
- * Created by jirka on 14.06.15.
- */
+
 import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -21,14 +17,12 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.jiriprochazka.weather.android.R;
-import com.jiriprochazka.weather.android.utility.Preferences;
 
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setRetainInstance(true);
         addPreferencesFromResource(R.xml.prefs);
     }
@@ -37,10 +31,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         // register listener
         PreferenceManager.getDefaultSharedPreferences(getActivity()).registerOnSharedPreferenceChangeListener(this);
-
         // render view
         renderView();
     }
@@ -49,7 +41,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     @Override
     public void onDestroy() {
         super.onDestroy();
-
         // unregister listener
         PreferenceManager.getDefaultSharedPreferences(getActivity()).unregisterOnSharedPreferenceChangeListener(this);
     }
@@ -64,7 +55,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         super.onPreferenceTreeClick(preferenceScreen, preference);
-
         // if the user has clicked on a preference screen, setup the action bar
         if (preference instanceof PreferenceScreen) {
             setupActionBar((PreferenceScreen) preference);
@@ -118,8 +108,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         // references
         ListPreference unitsListPreference = (ListPreference) findPreference(getString(R.string.prefs_key_units));
         EditTextPreference locationEditTextPreference = (EditTextPreference) findPreference(getString(R.string.prefs_key_location));
-        // preferences
-        Preferences preferences = new Preferences(getActivity());
         // summary
         unitsListPreference.setSummary(unitsListPreference.getEntry());
         locationEditTextPreference.setSummary(locationEditTextPreference.getText());

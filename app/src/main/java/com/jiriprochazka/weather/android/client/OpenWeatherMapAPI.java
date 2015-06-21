@@ -6,9 +6,7 @@ import com.jiriprochazka.weather.android.entity.WeatherEntity;
 import retrofit.http.GET;
 import retrofit.http.Query;
 
-/**
- * Created by jirka on 13.06.15.
- */
+
 public interface OpenWeatherMapAPI {
 
     @GET("/data/2.5/weather")

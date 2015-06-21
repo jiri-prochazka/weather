@@ -9,23 +9,20 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 
-public class TaskFragment extends Fragment
-{
+public class TaskFragment extends Fragment {
 	private final Object mLock = new Object();
 	private Boolean mReady = false;
 	private List<Runnable> mPendingCallbacks = new LinkedList<>();
 
 
 	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
 
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState)
-	{
+	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		synchronized(mLock)
 		{
@@ -41,8 +38,7 @@ public class TaskFragment extends Fragment
 
 
 	@Override
-	public void onDetach()
-	{
+	public void onDetach() {
 		super.onDetach();
 		synchronized(mLock)
 		{
@@ -51,15 +47,13 @@ public class TaskFragment extends Fragment
 	}
 
 
-	protected void runTaskCallback(Runnable runnable)
-	{
+	protected void runTaskCallback(Runnable runnable) {
 		if(mReady) runNow(runnable);
 		else addPending(runnable);
 	}
 
 
-	protected void executeTask(AsyncTask<Void, ?, ?> task)
-	{
+	protected void executeTask(AsyncTask<Void, ?, ?> task) {
 		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
 		{
 			// use AsyncTask.THREAD_POOL_EXECUTOR or AsyncTask.SERIAL_EXECUTOR
@@ -72,18 +66,13 @@ public class TaskFragment extends Fragment
 	}
 
 
-	private void runNow(Runnable runnable)
-	{
-		//Logcat.d("TaskFragment.runNow(): " + runnable.getClass().getEnclosingMethod());
+	private void runNow(Runnable runnable) {
 		getActivity().runOnUiThread(runnable);
 	}
 
 
-	private void addPending(Runnable runnable)
-	{
-		synchronized(mLock)
-		{
-			//Logcat.d("TaskFragment.addPending(): " + runnable.getClass().getEnclosingMethod());
+	private void addPending(Runnable runnable) {
+		synchronized(mLock) {
 			mPendingCallbacks.add(runnable);
 		}
 	}

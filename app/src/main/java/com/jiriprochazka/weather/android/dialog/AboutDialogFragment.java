@@ -15,10 +15,11 @@ public class AboutDialogFragment extends DialogFragment {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.dialog_about_text)
-                .setPositiveButton(R.string.label_ok, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.dialog_btn_ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                     }
                 });
+        builder.setTitle(R.string.dialog_about_title);
         // Create the AlertDialog object and return it
         return builder.create();
     }

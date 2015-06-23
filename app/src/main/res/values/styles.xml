@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<style name="Widget.Example.Toolbar" parent="@style/Widget.AppCompat.Toolbar">
+	<style name="Widget.Weather.Toolbar" parent="@style/Widget.AppCompat.Toolbar">
 		<item name="android:background">?attr/colorPrimary</item>
 		<item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
 		<item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>

@@ -24,6 +24,7 @@ import com.jiriprochazka.weather.android.listener.GeolocationListener;
 import com.jiriprochazka.weather.android.listener.OnLoadDataListener;
 import com.jiriprochazka.weather.android.task.LoadForecastTask;
 import com.jiriprochazka.weather.android.utility.NetworkManager;
+import com.jiriprochazka.weather.android.utility.Preferences;
 import com.jiriprochazka.weather.android.view.ViewState;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -86,15 +87,19 @@ public class ForecastFragment extends TaskFragment implements OnLoadDataListener
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // start geolocation
-        if(mLocation==null) {
-            mGeolocation = null;
-            mGeolocation = new Geolocation((LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE), this);
-        }
-
         // load and show data
         if(mViewState==null || mViewState==ViewState.OFFLINE) {
-            //loadData(); waiting for geolocation
+            // show progress
+            showProgress();
+            Preferences prefs = new Preferences(getActivity());
+            String customLocation = prefs.getCustomLocation();
+            // start geolocation
+            if(mLocation==null && customLocation.equals("")) {
+                mGeolocation = null;
+                mGeolocation = new Geolocation((LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE), this);
+            } else {
+                loadData();
+            }
         }
         else if(mViewState==ViewState.CONTENT) {
             if(mForecastList !=null) renderView();
@@ -192,7 +197,7 @@ public class ForecastFragment extends TaskFragment implements OnLoadDataListener
                         mForecastList.add(e);
                     }
                 } else {
-                    Toast.makeText(getActivity(), R.string.toast_null_forecast_text, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), R.string.empty_forecast_toast, Toast.LENGTH_LONG).show();
                 }
 
                 // render view
@@ -216,13 +221,19 @@ public class ForecastFragment extends TaskFragment implements OnLoadDataListener
 
     @Override
     public void onGeolocationFail(Geolocation geolocation) {
+        Toast.makeText(getActivity(), R.string.location_error_toast, Toast.LENGTH_LONG).show();
+        showEmpty();
+    }
+
+    @Override
+    public void onGeolocationDisabled(Geolocation geolocation) {
+        Toast.makeText(getActivity(),R.string.location_error_toast,Toast.LENGTH_LONG).show();
+        showEmpty();
     }
 
 
     private void loadData() {
         if(NetworkManager.isOnline(getActivity())) {
-            // show progress
-            showProgress();
             // run async task
             mLoadForecastTask = new LoadForecastTask(this, mLocation, getActivity());
             executeTask(mLoadForecastTask);
@@ -289,6 +300,19 @@ public class ForecastFragment extends TaskFragment implements OnLoadDataListener
 
         // listview empty view
         listView.setEmptyView(emptyView);
+    }
+
+    private void showEmpty() {
+        // show empty container
+        ViewGroup containerContent = (ViewGroup) mRootView.findViewById(R.id.container_content);
+        ViewGroup containerProgress = (ViewGroup) mRootView.findViewById(R.id.container_progress);
+        ViewGroup containerOffline = (ViewGroup) mRootView.findViewById(R.id.container_offline);
+        ViewGroup containerEmpty = (ViewGroup) mRootView.findViewById(R.id.container_empty);
+        containerContent.setVisibility(View.GONE);
+        containerProgress.setVisibility(View.GONE);
+        containerOffline.setVisibility(View.GONE);
+        containerEmpty.setVisibility(View.VISIBLE);
+        mViewState = ViewState.EMPTY;
     }
 
 

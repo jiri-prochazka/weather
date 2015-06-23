@@ -21,6 +21,7 @@ import retrofit.converter.GsonConverter;
 
 
 public class LoadForecastTask extends AsyncTask<Void, Void, String> {
+    public static final String OPENWEATHERMAP_ENDPOINT_URL = "http://api.openweathermap.org";
     private Location mLocation;
     private Context mContext;
     private WeakReference<OnLoadDataListener> mOnLoadDataListener;
@@ -40,8 +41,6 @@ public class LoadForecastTask extends AsyncTask<Void, Void, String> {
             Preferences prefs = new Preferences(mContext);
             String units = prefs.getUserUnits();
             String customLocation = prefs.getCustomLocation();
-            String longitude = String.valueOf(mLocation.getLongitude());
-            String latitude = String.valueOf(mLocation.getLatitude());
 
             Gson gson = new GsonBuilder()
                     .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -49,16 +48,18 @@ public class LoadForecastTask extends AsyncTask<Void, Void, String> {
                     .create();
 
             RestAdapter restAdapter = new RestAdapter.Builder()
-                    .setEndpoint("http://api.openweathermap.org")
+                    .setEndpoint(OPENWEATHERMAP_ENDPOINT_URL)
                     .setConverter(new GsonConverter(gson))
                     .build();
 
             OpenWeatherMapAPI api = restAdapter.create(OpenWeatherMapAPI.class);
 
-            if(customLocation == null || customLocation.isEmpty()) {
-                mForecastEntity = api.getForecast(longitude, latitude, units);
-            } else {
+            if(customLocation != null && !customLocation.isEmpty()) {
                 mForecastEntity = api.getForecastCity(customLocation, units);
+            } else if(mLocation != null){
+                String longitude = String.valueOf(mLocation.getLongitude());
+                String latitude = String.valueOf(mLocation.getLatitude());
+                mForecastEntity = api.getForecast(longitude, latitude, units);
             }
 
 

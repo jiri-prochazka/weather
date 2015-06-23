@@ -35,6 +35,7 @@ import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String ABOUT_DIALOG_TAG = "About Dialog";
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerListView;
@@ -250,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showAboutDialog() {
         // create and show the dialog
-        new AboutDialogFragment().show(getFragmentManager(), "About Dialog");
+        new AboutDialogFragment().show(getFragmentManager(), ABOUT_DIALOG_TAG);
     }
 
 

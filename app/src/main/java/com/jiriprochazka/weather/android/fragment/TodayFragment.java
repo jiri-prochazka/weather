@@ -5,7 +5,6 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,12 +32,11 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
-import java.util.Date;
-import java.util.List;
-
 
 public class TodayFragment extends TaskFragment implements OnLoadDataListener, GeolocationListener
 {
+	public static final String WEATHER_ICONS_URI = "http://openweathermap.org/img/w/";
+	public static final String WEATHER_ICON_EXTENSION = ".png";
 	private ViewState mViewState = null;
 	private View mRootView;
 	private LoadTodayTask mLoadTodayTask;
@@ -89,15 +87,22 @@ public class TodayFragment extends TaskFragment implements OnLoadDataListener, G
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		// start geolocation
-		if(mLocation==null) {
-			mGeolocation = null;
-			mGeolocation = new Geolocation((LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE), this);
-		}
+
 		
 		// load and show data
 		if(mViewState==null || mViewState==ViewState.OFFLINE) {
-			//loadData();
+			// show progress
+			showProgress();
+			Preferences prefs = new Preferences(getActivity());
+			String customLocation = prefs.getCustomLocation();
+			// start geolocation
+			if(mLocation==null && customLocation.equals("")) {
+
+				mGeolocation = null;
+				mGeolocation = new Geolocation((LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE), this);
+			} else {
+				loadData();
+			}
 		} else if(mViewState==ViewState.CONTENT) {
 			if(mWeather!=null) renderView();
 			showContent();
@@ -189,7 +194,7 @@ public class TodayFragment extends TaskFragment implements OnLoadDataListener, G
 					showContent();
 				} else {
 					showEmpty();
-					Toast.makeText(getActivity(), R.string.toast_null_forecast_text, Toast.LENGTH_LONG).show();
+					Toast.makeText(getActivity(), R.string.empty_forecast_toast, Toast.LENGTH_LONG).show();
 				}
 			}
 		});
@@ -216,18 +221,19 @@ public class TodayFragment extends TaskFragment implements OnLoadDataListener, G
 
 	@Override
 	public void onGeolocationFail(Geolocation geolocation) {
-		runTaskCallback(new Runnable() {
-			public void run() {
-				if(mRootView==null) return; // view was destroyed
-			}
-		});
+		Toast.makeText(getActivity(),R.string.location_error_toast,Toast.LENGTH_LONG).show();
+		showEmpty();
+	}
+
+	@Override
+	public void onGeolocationDisabled(Geolocation geolocation) {
+		Toast.makeText(getActivity(),R.string.location_error_toast,Toast.LENGTH_LONG).show();
+		showEmpty();
 	}
 
 
 	private void loadData() {
 		if(NetworkManager.isOnline(getActivity())) {
-			// show progress
-			showProgress();
 			// run async task
 			mLoadTodayTask = new LoadTodayTask(this, mLocation, getActivity());
 			executeTask(mLoadTodayTask);
@@ -331,7 +337,7 @@ public class TodayFragment extends TaskFragment implements OnLoadDataListener, G
 		ImageView photoImageView = (ImageView) mRootView.findViewById(R.id.imageView);
 
 		// image caching
-		mImageLoader.displayImage("http://openweathermap.org/img/w/"+weather1.getIcon()+".png", photoImageView, mDisplayImageOptions, mImageLoadingListener);
+		mImageLoader.displayImage(WEATHER_ICONS_URI + weather1.getIcon() + WEATHER_ICON_EXTENSION, photoImageView, mDisplayImageOptions, mImageLoadingListener);
 
 	}
 }

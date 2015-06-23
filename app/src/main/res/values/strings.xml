@@ -1,38 +1,29 @@
 <resources>
     <string name="app_name">Weather</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-
-    <!-- LANGUAGE INDEPENDENT -->
-    <string name="app_store_uri">https://play.google.com/store/apps/details?id=com.example</string>
 
     <!-- LANGUAGE DEPENDENT -->
     <string name="global_offline_toast">No Internet connection available</string>
-    <string name="global_apicall_fail_toast">Wooops! Communication with server failed</string>
-    <string name="global_apicall_unknown_host_toast">Wooops! Cannot establish a connection to the server</string>
-    <string name="global_apicall_not_found_toast">Wooops! Resource not found</string>
-    <string name="global_apicall_timeout_toast">Wooops! Connection timed out</string>
-    <string name="global_apicall_parse_fail_toast">Wooops! Unable to process response from server</string>
-
-    <string name="title_example">Example title</string>
-
-    <string name="menu_example">Example menu</string>
 
     <string name="placeholder_empty">No data</string>
     <string name="placeholder_offline">No network</string>
 
-    <string name="fragment_example_title">Example fragment title</string>
+    <string name="fragment_today_title">Today</string>
+    <string name="fragment_forecast_title">Forecast</string>
 
-    <string name="dialog_example_title">Example dialog title</string>
-
-    <string name="notification_example_title">Example notification title</string>
-    <string name="drawer_open">Opened</string>
-    <string name="drawer_close">Closed</string>
+    <string name="drawer_open">Open drawer</string>
+    <string name="drawer_close">Close drawer</string>
     <string name="drawer_item_today">Today</string>
     <string name="drawer_item_forecast">Forecast</string>
-    <string name="dialog_about_text">Stuff about me :-)</string>
-    <string name="label_ok">ok</string>
-    <string name="action_about">About</string>
-    <string name="prefs_key_user_units">user_units</string>
-    <string name="toast_null_forecast_text">Location for weather forecast not found</string>
+
+    <string name="dialog_about_title">About</string>
+    <string name="dialog_about_text">Weather app created by Jiří Procházka</string>
+    <string name="dialog_btn_ok">ok</string>
+
+    <string name="menu_action_about">About</string>
+    <string name="menu_action_settings">Settings</string>
+
+
+    <string name="empty_forecast_toast">Location or weather forecast not found</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="location_error_toast">Failed to acquire location, check your settings or set a custom location</string>
 </resources>

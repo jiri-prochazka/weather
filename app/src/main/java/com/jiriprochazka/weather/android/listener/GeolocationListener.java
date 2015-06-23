@@ -11,4 +11,5 @@ public interface GeolocationListener
 {
     public void onGeolocationRespond(Geolocation geolocation, Location location);
     public void onGeolocationFail(Geolocation geolocation);
+    public void onGeolocationDisabled(Geolocation geolocation);
 }

@@ -4,4 +4,4 @@
 	android:id="@+id/toolbar"
 	android:layout_width="match_parent"
 	android:layout_height="?attr/actionBarSize"
-	style="@style/Widget.Example.Toolbar" />
+	style="@style/Widget.Weather.Toolbar" />

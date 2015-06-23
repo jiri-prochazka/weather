@@ -42,8 +42,7 @@ public class LoadTodayTask extends AsyncTask<Void, Void, String>
 			Preferences prefs = new Preferences(mContext);
 			String units = prefs.getUserUnits();
 			String customLocation = prefs.getCustomLocation();
-			String longitude = String.valueOf(mLocation.getLongitude());
-			String latitude = String.valueOf(mLocation.getLatitude());
+
 
 			Gson gson = new GsonBuilder()
 					.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -56,12 +55,14 @@ public class LoadTodayTask extends AsyncTask<Void, Void, String>
 					.build();
 
 			OpenWeatherMapAPI api = restAdapter.create(OpenWeatherMapAPI.class);
-			if(customLocation == null || customLocation.isEmpty()) {
-				mWeather = api.getTodaysWeather(longitude, latitude, units);
-			} else {
+			if(customLocation != null && !customLocation.isEmpty()) {
 				mWeather = api.getTodaysWeatherCity(customLocation, units);
+			} else if(mLocation != null){
+				String longitude = String.valueOf(mLocation.getLongitude());
+				String latitude = String.valueOf(mLocation.getLatitude());
+				mWeather = api.getTodaysWeather(longitude, latitude, units);
 			}
-			Log.d("DEBUG", prefs.getCustomLocation());
+
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

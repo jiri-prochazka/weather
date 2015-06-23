@@ -26,14 +26,9 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="52sp"
+            android:textSize="@dimen/global_text_size_display_3"
             android:paddingRight="@dimen/global_keyline_s"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:shadowColor="#303030"
-            android:shadowRadius="2"
-            android:shadowDx="3"
-            android:shadowDy="3"
+            style="@style/TextAppearance.Weather.ShadowText"
             tools:text="11" />
 
         <TextView
@@ -44,13 +39,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@android:color/white"
-            android:textStyle="bold"
-            android:shadowColor="#303030"
-            android:shadowRadius="2"
-            android:shadowDx="3"
-            android:shadowDy="3"
             android:paddingLeft="@dimen/global_keyline_s"
+            style="@style/TextAppearance.Weather.ShadowText"
             tools:text="Medium Text" />
 
         <RelativeLayout
@@ -78,12 +68,7 @@
                 android:layout_toEndOf="@+id/imageView"
                 android:layout_toRightOf="@+id/imageView"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
-                android:shadowColor="#303030"
-                android:shadowRadius="2"
-                android:shadowDx="3"
-                android:shadowDy="3"
+                style="@style/TextAppearance.Weather.ShadowText"
                 tools:text="Medium Text" />
         </RelativeLayout>
 
@@ -92,8 +77,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="48dp"
-            android:background="#88ffffff"
+            android:layout_marginTop="@dimen/global_spacing_l"
+            android:background="@color/today_table_background"
             android:padding="@dimen/global_keyline_s"
             android:shrinkColumns="*"
             android:stretchColumns="*">
@@ -101,8 +86,8 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp">
+                android:paddingBottom="@dimen/global_spacing_xxs"
+                android:paddingTop="@dimen/global_spacing_xxs">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -113,15 +98,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
-                        android:maxHeight="24dp"
+                        android:maxHeight="@dimen/today_table_icon_height"
                         android:src="@mipmap/ic_weather_humidity" />
 
                     <TextView
                         android:id="@+id/humidity_icon_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="4dp"
-                        android:textAppearance="@style/TextAppearance.Example.Body1"
+                        android:paddingLeft="@dimen/global_spacing_xxxs"
+                        android:textAppearance="@style/TextAppearance.Weather.Body1"
                         tools:text="78%" />
                 </LinearLayout>
 
@@ -134,15 +119,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
-                        android:maxHeight="24dp"
+                        android:maxHeight="@dimen/today_table_icon_height"
                         android:src="@mipmap/ic_weather_precipitation" />
 
                     <TextView
                         android:id="@+id/precipitation_icon_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="4dp"
-                        android:textAppearance="@style/TextAppearance.Example.Body1"
+                        android:paddingLeft="@dimen/global_spacing_xxxs"
+                        android:textAppearance="@style/TextAppearance.Weather.Body1"
                         tools:text="2 mm" />
                 </LinearLayout>
 
@@ -155,15 +140,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
-                        android:maxHeight="24dp"
+                        android:maxHeight="@dimen/today_table_icon_height"
                         android:src="@mipmap/ic_weather_pressure" />
 
                     <TextView
                         android:id="@+id/pressure_icon_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="4dp"
-                        android:textAppearance="@style/TextAppearance.Example.Body1"
+                        android:paddingLeft="@dimen/global_spacing_xxxs"
+                        android:textAppearance="@style/TextAppearance.Weather.Body1"
                         tools:text="984 hPa" />
 
                 </LinearLayout>
@@ -172,8 +157,8 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp">
+                android:paddingBottom="@dimen/global_spacing_xxs"
+                android:paddingTop="@dimen/global_spacing_xxs">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -184,15 +169,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
-                        android:maxHeight="24dp"
+                        android:maxHeight="@dimen/today_table_icon_height"
                         android:src="@mipmap/ic_weather_wind" />
 
                     <TextView
                         android:id="@+id/wind_icon_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="4dp"
-                        android:textAppearance="@style/TextAppearance.Example.Body1"
+                        android:paddingLeft="@dimen/global_spacing_xxxs"
+                        android:textAppearance="@style/TextAppearance.Weather.Body1"
                         tools:text="78%" />
                 </LinearLayout>
 
@@ -205,15 +190,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
-                        android:maxHeight="24dp"
+                        android:maxHeight="@dimen/today_table_icon_height"
                         android:src="@mipmap/ic_weather_direction" />
 
                     <TextView
                         android:id="@+id/direction_icon_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="4dp"
-                        android:textAppearance="@style/TextAppearance.Example.Body1"
+                        android:paddingLeft="@dimen/global_spacing_xxxs"
+                        android:textAppearance="@style/TextAppearance.Weather.Body1"
                         tools:text="78%" />
                 </LinearLayout>
 

@@ -22,6 +22,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/global_keyline_s"
-        android:textAppearance="@style/TextAppearance.Example.Body1" />
+        android:textAppearance="@style/TextAppearance.Weather.Body1" />
 
 </LinearLayout>

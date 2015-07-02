@@ -3,8 +3,6 @@ Weather app
 
 This Android application can provide a simple weather forecast for the current location or user defined location. Weather data are obtained from [Open Weather Map API](http://openweathermap.org/api). 
 
-*Note: This app was created as a test project for STRV*
-
 
 Features
 ========
